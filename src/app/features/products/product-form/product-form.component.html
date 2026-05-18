@@ -1,0 +1,111 @@
+<div class="container">
+  <div class="form-card">
+    <h2 class="form-title">Formulario de Registro</h2>
+    <hr class="divider" />
+
+    <app-skeleton-loader [show]="isLoading && isEditMode" type="form" [rows]="3"></app-skeleton-loader>
+
+    @if (errorMessage) {
+      <p class="alert">{{ errorMessage }}</p>
+    }
+
+    @if (!(isLoading && isEditMode)) {
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="id">ID</label>
+          <input type="text" id="id" formControlName="id" class="form-control" [class.is-invalid]="isInvalid('id')" />
+          @if (isInvalid('id')) {
+          <div class="error-message">
+            @if (productForm.get('id')?.errors?.['required']) { <span>Este campo es requerido!</span> }
+            @if (productForm.get('id')?.errors?.['minlength']) { <span>Mínimo 3 caracteres.</span> }
+            @if (productForm.get('id')?.errors?.['maxlength']) { <span>Máximo 10 caracteres.</span> }
+            @if (productForm.get('id')?.errors?.['idExists']) { <span>ID no válido! (Ya existe)</span> }
+            @if (productForm.get('id')?.errors?.['api']) { <span>{{ productForm.get('id')?.errors?.['api'] }}</span> }
+          </div>
+          }
+        </div>
+        <div class="form-group half-width">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" formControlName="name" class="form-control"
+            [class.is-invalid]="isInvalid('name')" />
+          @if (isInvalid('name')) {
+          <div class="error-message">
+            @if (productForm.get('name')?.errors?.['required']) { <span>Este campo es requerido!</span> }
+            @if (productForm.get('name')?.errors?.['minlength']) { <span>Mínimo 6 caracteres.</span> }
+            @if (productForm.get('name')?.errors?.['maxlength']) { <span>Máximo 100 caracteres.</span> }
+            @if (productForm.get('name')?.errors?.['api']) { <span>{{ productForm.get('name')?.errors?.['api'] }}</span> }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="description">Descripción</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            class="form-control" 
+            [class.is-invalid]="isInvalid('description')"
+            rows="3"
+          ></textarea>
+          @if (isInvalid('description')) {
+          <div class="error-message">
+            @if (productForm.get('description')?.errors?.['required']) { <span>Este campo es requerido!</span> }
+            @if (productForm.get('description')?.errors?.['minlength']) { <span>Mínimo 10 caracteres.</span> }
+            @if (productForm.get('description')?.errors?.['maxlength']) { <span>Máximo 200 caracteres.</span> }
+            @if (productForm.get('description')?.errors?.['api']) { <span>{{ productForm.get('description')?.errors?.['api'] }}</span> }
+          </div>
+          }
+        </div>
+
+        <div class="form-group half-width">
+          <label for="logo">Logo</label>
+          <input type="text" id="logo" formControlName="logo" class="form-control"
+            [class.is-invalid]="isInvalid('logo')" />
+          @if (isInvalid('logo')) {
+          <div class="error-message">
+            @if (productForm.get('logo')?.errors?.['required']) { <span>Este campo es requerido!</span> }
+            @if (productForm.get('logo')?.errors?.['api']) { <span>{{ productForm.get('logo')?.errors?.['api'] }}</span> }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="date_release">Fecha Liberación</label>
+          <input type="date" id="date_release" formControlName="date_release" class="form-control"
+            [class.is-invalid]="isInvalid('date_release')" />
+          @if (isInvalid('date_release')) {
+          <div class="error-message">
+            @if (productForm.get('date_release')?.errors?.['required']) { <span>Este campo es requerido!</span> }
+            @if (productForm.get('date_release')?.errors?.['invalidDate']) { <span>La fecha debe ser igual o mayor a la actual.</span> }
+            @if (productForm.get('date_release')?.errors?.['api']) { <span>{{ productForm.get('date_release')?.errors?.['api'] }}</span> }
+          </div>
+          }
+        </div>
+        <div class="form-group half-width">
+          <label for="date_revision">Fecha Revisión</label>
+          <input type="date" id="date_revision" formControlName="date_revision" class="form-control" />
+          @if (isInvalid('date_revision')) {
+          <div class="error-message">
+            @if (productForm.get('date_revision')?.errors?.['api']) { <span>{{ productForm.get('date_revision')?.errors?.['api'] }}</span> }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="onReset()">Reiniciar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+          Enviar
+        </button>
+      </div>
+
+    </form>
+    }
+  </div>
+</div>

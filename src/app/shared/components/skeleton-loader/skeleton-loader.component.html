@@ -1,0 +1,23 @@
+@if (show) {
+<div class="skeleton-container">
+  @if (type === 'table') {
+    @for (row of rowsArray; track row) {
+      <div class="skeleton-row">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    }
+  } @else {
+    @for (row of rowsArray; track row) {
+      <div class="skeleton-form-row">
+        <span></span>
+        <span></span>
+      </div>
+    }
+  }
+</div>
+}

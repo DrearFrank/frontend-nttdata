@@ -1,0 +1,128 @@
+:root {
+  --color-primary: #f8df6f;
+  --color-primary-hover: #e5c94e;
+  --color-background: #f5f6f8;
+  --color-card: #ffffff;
+  --color-text-main: #333333;
+  --color-text-muted: #888888;
+  --color-border: #e0e0e0;
+  --color-error: #d93025;
+  --color-error-bg: #fce8e6;
+  --font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --border-radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  line-height: 1.5;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #000;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:disabled {
+  background-color: #f1f1f1;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.btn-secondary { background-color: #eef0f3; color: #333; }
+.btn-secondary:hover { background-color: #d1d4d8; }
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+}
+
+.form-control {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #888;
+}
+
+.form-control.is-invalid { border-color: var(--color-error); }
+
+.error-message {
+  color: var(--color-error);
+  font-size: 13px;
+  margin-top: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.alert {
+  margin: var(--spacing-md);
+  padding: 12px;
+  border-radius: var(--border-radius);
+  color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.header-logo {
+  font-weight: 700;
+  font-size: 20px;
+  color: #0b2e59;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

@@ -1,0 +1,112 @@
+<div class="container" (click)="closeMenu()">
+  <div class="toolbar">
+    <input 
+      type="text" 
+      class="form-control search-input" 
+      placeholder="Buscar..." 
+      [(ngModel)]="searchTerm" 
+      (ngModelChange)="onSearchChange()"
+    />
+    <button class="btn btn-primary" (click)="navigateToAdd()">Agregar</button>
+  </div>
+
+  <div class="card">
+    <app-skeleton-loader [show]="isLoading" [rows]="pageSize"></app-skeleton-loader>
+
+    <div class="table-container" *ngIf="!isLoading">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Nombre del producto</th>
+            <th>
+              Descripción
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-left: 4px;">
+                <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="2"/>
+                <path d="M12 16V12" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="8" r="1" fill="#888"/>
+              </svg>
+            </th>
+            <th>
+              Fecha de liberación
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-left: 4px;">
+                <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="2"/>
+                <path d="M12 16V12" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="8" r="1" fill="#888"/>
+              </svg>
+            </th>
+            <th>
+              Fecha de reestructuración
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align: middle; margin-left: 4px;">
+                <circle cx="12" cy="12" r="10" stroke="#888" stroke-width="2"/>
+                <path d="M12 16V12" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="12" cy="8" r="1" fill="#888"/>
+              </svg>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of displayedProducts">
+            <td>
+              <div class="logo-container">
+                <img [src]="product.logo" alt="{{ product.name }}" (error)="product.logo = 'https://via.placeholder.com/40'" />
+              </div>
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.date_release | date:'dd/MM/yyyy' }}</td>
+            <td>{{ product.date_revision | date:'dd/MM/yyyy' }}</td>
+            <td class="action-cell">
+              <div class="menu-container">
+                <button class="icon-btn" (click)="toggleMenu(product.id, $event)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="6" r="2" fill="#888"/>
+                    <circle cx="12" cy="12" r="2" fill="#888"/>
+                    <circle cx="12" cy="18" r="2" fill="#888"/>
+                  </svg>
+                </button>
+                <div class="dropdown-menu" *ngIf="activeMenuId === product.id">
+                  <button class="dropdown-item" (click)="navigateToEdit(product.id)">Editar</button>
+                  <button class="dropdown-item" (click)="openDeleteModal(product)">Eliminar</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="displayedProducts.length === 0">
+            <td colspan="6" class="text-center no-data">No se encontraron resultados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <span class="results-count">{{ filteredProducts.length }} Resultados</span>
+      
+      <div class="pagination-controls">
+        <button class="btn btn-icon" (click)="prevPage()" [disabled]="currentPage === 1">
+          &lt;
+        </button>
+        <span class="page-info">{{ currentPage }} de {{ totalPages }}</span>
+        <button class="btn btn-icon" (click)="nextPage()" [disabled]="currentPage === totalPages">
+          &gt;
+        </button>
+      </div>
+
+      <div class="pagination-select">
+        <select class="form-control" [value]="pageSize" (change)="onPageSizeChange($event)">
+          <option [value]="5">5</option>
+          <option [value]="10">10</option>
+          <option [value]="20">20</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-confirm-modal 
+  [isOpen]="showDeleteModal" 
+  [productName]="productToDelete?.name || ''"
+  (confirm)="confirmDelete()"
+  (cancel)="cancelDelete()">
+</app-confirm-modal>
